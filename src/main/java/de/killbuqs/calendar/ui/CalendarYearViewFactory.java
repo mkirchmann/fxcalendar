@@ -1,12 +1,12 @@
 package de.killbuqs.calendar.ui;
 
-import java.util.Calendar;
 import java.util.List;
 
 import de.killbuqs.calendar.intf.WeekDay;
 import de.killbuqs.calendar.model.CalendarDateInformation;
 import de.killbuqs.calendar.model.CalendarMonthYear;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -54,21 +54,30 @@ public class CalendarYearViewFactory {
 	}
 
 	/**
-	 * create the cellfactory and set it to the given tablecolumn.
+	 * Create the cellfactory and set it to the given tablecolumn.
 	 * 
 	 * @param tablecolumn
 	 *            given tablecolumn.
 	 * @param theWeekDay
-	 *            given weekday as {@link Calendar#MONDAY} ,
-	 *            {@link Calendar#TUESDAY}, {@link Calendar#WEDNESDAY},
-	 *            {@link Calendar#THURSDAY}, {@link Calendar#FRIDAY},
-	 *            {@link Calendar#SATURDAY} or {@link Calendar#SUNDAY}.
+	 *            given {@link WeekDay}.
 	 */
 	protected void createCell(final TableColumn<CalendarMonthYear, CalendarDateInformation> tablecolumn,
 			final WeekDay theWeekDay) {
 		tablecolumn.setCellFactory(x -> {
-			return new CalendarTableCell(theWeekDay);
+			return createTableCellForWeekDay(theWeekDay);
 		});
+	}
+
+	/**
+	 * Create a {@link TableCell} that can deal with {@link CalendarMonthYear}
+	 * as row and {@link CalendarDateInformation} as value.
+	 * 
+	 * @param theWeekDay
+	 *            given
+	 * @return returns an implementation of {@link TableCell}
+	 */
+	public TableCell<CalendarMonthYear, CalendarDateInformation> createTableCellForWeekDay(final WeekDay theWeekDay) {
+		return new CalendarTableCell(theWeekDay);
 	}
 
 }

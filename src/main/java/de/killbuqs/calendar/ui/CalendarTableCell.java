@@ -9,7 +9,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 /**
@@ -18,13 +18,27 @@ import javafx.scene.text.Font;
 
 public class CalendarTableCell extends TableCell<CalendarMonthYear, CalendarDateInformation> {
 
+	private DayOfWeekColorFactory dayOfWeekColorFactory;
+
+	public CalendarTableCell(final WeekDay weekDay) {
+		this(weekDay, new DayOfWeekColorFactory());
+	}
     /**
      * Constructor.
      *
      * @param theWeekDay
      */
-    public CalendarTableCell(final WeekDay theWeekDay) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param theWeekDay
+	 *            the given weekday.
+	 * @param dayOfWeekColorFactory
+	 *            the given color factory.
+	 */
+	public CalendarTableCell(final WeekDay theWeekDay, DayOfWeekColorFactory dayOfWeekColorFactory) {
         weekDay = theWeekDay;
+		this.dayOfWeekColorFactory = dayOfWeekColorFactory;
         defaultBackground = computeBackground();
         centerLabel = new Label();
         bottomLabel = new Label();
@@ -50,7 +64,7 @@ public class CalendarTableCell extends TableCell<CalendarMonthYear, CalendarDate
         if (theItem != null) {
             dateAsText = Integer.toString(theItem.getDate());
             if (theItem.containsPublicHoliday()) {
-                background = computeBackground(WeekDay.SUNDAY);
+				background = computeBackground(WeekDay.SUNDAY);
             } else {
                 background = defaultBackground;
             }
@@ -62,6 +76,12 @@ public class CalendarTableCell extends TableCell<CalendarMonthYear, CalendarDate
         setBackground(background);
     }
 
+	private Background computeBackground(WeekDay wd) {
+		Paint bgColor = dayOfWeekColorFactory.createBackgroundColor(wd);
+		final Background bg = new Background(new BackgroundFill(bgColor, null, null));
+		return bg;
+	}
+
     /**
      * Red for sunday, grey for saturday.
      *
@@ -69,23 +89,6 @@ public class CalendarTableCell extends TableCell<CalendarMonthYear, CalendarDate
      */
     private Background computeBackground() {
         return computeBackground(this.weekDay);
-    }
-
-    private Background computeBackground(final WeekDay weekDay) {
-        final Color bgColor;
-        final double opacity = 0.6;
-        if (weekDay == WeekDay.SUNDAY) {
-            // paint it red
-            bgColor = new Color(1.0, 0.3, 0.3, opacity);
-        } else if (weekDay == WeekDay.SATURDAY) {
-            // paint it gray
-            bgColor = new Color(0.95, 0.95, 0.95, opacity);
-        } else {
-            // paint it white
-            bgColor = new Color(1.0, 1.0, 1.0, opacity);
-        }
-        final Background bg = new Background(new BackgroundFill(bgColor, null, null));
-        return bg;
     }
 
     private final Label bottomLabel;

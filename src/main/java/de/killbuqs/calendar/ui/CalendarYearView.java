@@ -3,6 +3,7 @@ package de.killbuqs.calendar.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.killbuqs.calendar.intf.Month;
 import de.killbuqs.calendar.model.CalendarMonthYear;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
@@ -26,8 +27,8 @@ public class CalendarYearView {
 
 	private List<CalendarMonthYear> createListOfMonth(final int year) {
 		final List<CalendarMonthYear> values = new ArrayList<>();
-		for (int y = 0; y < 12; y++) {
-			values.add(new CalendarMonthYear(year, y + 1));
+		for (Month m : Month.listAllMonth()) {
+			values.add(new CalendarMonthYear(year, m));
 		}
 		return values;
 	}

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import de.killbuqs.calendar.intf.Month;
 import de.killbuqs.calendar.intf.WeekDay;
 
 /**
@@ -16,7 +17,7 @@ public class CalendarMonthYear {
 
 	private final int days;
 
-	private final int month;
+	private final Month month;
 
 	private final String nameForMonth;
 
@@ -58,9 +59,9 @@ public class CalendarMonthYear {
     /**
      * Constructor.
      */
-    public CalendarMonthYear(final int theYear, final int theMonth) {
+	public CalendarMonthYear(final int theYear, Month theMonth) {
         this.month = theMonth;
-        final Calendar calendar = new GregorianCalendar(theYear, theMonth - 1, 1);
+		final Calendar calendar = new GregorianCalendar(theYear, theMonth.getJavaCalendarOffset(), 1);
         dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         weekDayforCalendarEquivalent = WeekDay.forCalendarEquivalent(dayOfWeek);
         nameForMonth = new SimpleDateFormat("MMM").format(calendar.getTime());
@@ -103,7 +104,7 @@ public class CalendarMonthYear {
         return nameForMonth;
     }
 
-	public int getMonth() {
+	public Month getMonth() {
 		return month;
 	}
 }

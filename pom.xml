@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.killbuqs</groupId>
 	<artifactId>fxcalendar</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -11,11 +11,10 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-			<version>${java.version}</version>
-			<scope>system</scope>
-			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx</artifactId>
+		    <version>11</version>
+		    <type>pom</type>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
